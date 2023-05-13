@@ -1,15 +1,18 @@
-interface WeatherData {
+export interface WeatherData {
   location: string;
   state: string;
   temperature: string;
   condition: string;
   localtime: string;
-  localtime_epoch: number;
+  country: string;
+  timezone: string;
+  longitude: number;
+  latitude: number;
 }
 
 export default function weatherAPI(): Promise<WeatherData> {
   const apiKey = "3c19227df3e440f59a441830231201";
-  const userInput = "London";
+  const userInput = "Kansas City";
   const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${userInput}`;
 
   return fetch(apiUrl)
@@ -26,6 +29,10 @@ export default function weatherAPI(): Promise<WeatherData> {
       const temperature = data.current.temp_f;
       const condition = data.current.condition.text;
       const localtime = data.location.localtime;
+      const country = data.location.country;
+      const timezone = data.location.tz_id;
+      const longitude = data.location.lon;
+      const latitude = data.location.lat;
 
       const weatherData: WeatherData = {
         location,
@@ -33,6 +40,10 @@ export default function weatherAPI(): Promise<WeatherData> {
         temperature,
         condition,
         localtime: localtime,
+        country,
+        timezone,
+        longitude,
+        latitude,
       };
 
       return weatherData;

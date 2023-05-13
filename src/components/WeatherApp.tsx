@@ -6,6 +6,7 @@ const WeatherApp: React.FC = () => {
   const [weatherInfo, setWeatherInfo] = React.useState<WeatherData | null>(
     null
   );
+  const allWeatherData = weatherInfo ? [weatherInfo] : [];
 
   React.useEffect(() => {
     weatherAPI()
@@ -21,7 +22,7 @@ const WeatherApp: React.FC = () => {
     <>
       <Text>
         {weatherInfo ? (
-          <pre>{weatherInfo.temperature}</pre>
+          <pre>{JSON.stringify(allWeatherData, null, 2)}</pre>
         ) : (
           <p>Loading weather information...</p>
         )}

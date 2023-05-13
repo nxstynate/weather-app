@@ -2,21 +2,22 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Image,
   Divider,
+  HStack,
   Heading,
   Stack,
   Text,
   VStack,
-  HStack,
 } from "@chakra-ui/react";
 import React from "react";
-import weatherAPI, { WeatherData } from "../weather-api";
+import { WeatherData } from "../weather-api";
+import weatherAPI from "../weather-api";
 
-export default function MainTemp() {
+export default function WeatherCard() {
   const [weatherInfo, setWeatherInfo] = React.useState<WeatherData | null>(
     null
   );
+  const [dateStr, timeStr] = weatherInfo?.localtime.split(" ") || [];
 
   React.useEffect(() => {
     weatherAPI()
@@ -30,35 +31,28 @@ export default function MainTemp() {
 
   return (
     <>
-      <Card maxW="lg" padding={10}>
-        <HStack spacing={60}>
-          <Text>{weatherInfo?.localtime}</Text>
-          <Text>Monday</Text>
+      <Card maxW="lg" padding={10} borderRadius={20}>
+        <HStack spacing={80}>
+          <Text>{dateStr}</Text>
+          <Text>{timeStr}</Text>
         </HStack>
         <Divider />
         <CardBody>
           <VStack>
             <Heading>{weatherInfo?.location}</Heading>
-            {/* <Heading size="4xl">75</Heading> */}
+            <Text>{weatherInfo?.state}</Text>
             <Heading size="4xl">{weatherInfo?.temperature}</Heading>
-            <Image
-              src="https://www.clipartmax.com/png/middle/129-1295102_weather-forecast-icon-partially-cloudy-png.png"
-              alt="Green double couch with wooden legs"
-              boxSize={150}
-              objectFit="cover"
-              borderRadius="full"
-            />
             <Heading size="md">{weatherInfo?.condition}</Heading>
           </VStack>
-          <Stack mt="6" spacing="3">
-            <Text>description here</Text>
+          <Stack mt="3" spacing="3">
+            <Text>Timezone: {weatherInfo?.timezone}</Text>
           </Stack>
         </CardBody>
         <Divider />
         <CardFooter>
           <HStack spacing={60}>
-            <Text>H:80</Text>
-            <Text>L:60</Text>
+            <Text>Longitude: {weatherInfo?.longitude}</Text>
+            <Text>Latitude: {weatherInfo?.latitude}</Text>
           </HStack>
         </CardFooter>
       </Card>
