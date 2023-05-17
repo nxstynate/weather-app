@@ -1,3 +1,5 @@
+import apiKeyNum from "./weather-api-key";
+
 export interface WeatherData {
   location: string;
   state: string;
@@ -11,7 +13,7 @@ export interface WeatherData {
 }
 
 export default function weatherAPI(): Promise<WeatherData> {
-  const apiKey = "3c19227df3e440f59a441830231201";
+  const apiKey = apiKeyNum();
   const userInput = "Kansas City";
   const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${userInput}`;
 
